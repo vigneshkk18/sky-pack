@@ -1,17 +1,6 @@
 import ReactDOM from "react-dom/client";
-import { CssVarsProvider, extendTheme } from "@mui/joy";
 
 import App from "./App";
+import "./index.css";
 
-const theme = extendTheme({ cssVarPrefix: "sky-pack" });
-
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <CssVarsProvider
-    defaultMode="system"
-    theme={theme}
-    modeStorageKey="sky-pack-theme-mode"
-    disableNestedContext
-  >
-    <App />
-  </CssVarsProvider>
-);
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);

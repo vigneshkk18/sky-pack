@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+}
+
+@layer base {
+  :root {
+    --background: 239 98% 76%;
+    --foreground: 0 0% 100%;
+
+    --primary: 239 98% 76%;
+    --primary-foreground: 0 0% 100%;
+
+    --background-2: 0 0% 97%;
+    --border: 0 0% 2% / 0.1;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 33%;
+
+    --destructive: 0 72.22% 50.59%;
+    --destructive-foreground: 0 0% 98%;
+  }
+
+  progress {
+    @apply rounded-md h-1;
+  }
+
+  progress::-webkit-progress-bar {
+    @apply bg-border rounded-md;
+  }
+
+  progress[data-variant="circular"] {
+    @apply rounded-full;
+  }
+
+  progress::-webkit-progress-value {
+    @apply bg-primary rounded-md;
+  }
+
+  .file:first-child {
+    @apply border-t border-t-border rounded-t;
+  }
+
+  .file:last-child {
+    @apply border-b border-b-border rounded-b;
+  }
+
+  @screen md {
+
+    .file:nth-of-type(1),
+    .file:nth-of-type(2) {
+      @apply border-t border-t-border rounded-t;
+    }
+
+    .file:nth-last-child(1),
+    .file:nth-last-child(2) {
+      @apply border-b border-b-border rounded-b;
+    }
+  }
+}
