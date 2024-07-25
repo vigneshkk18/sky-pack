@@ -25,7 +25,7 @@ function Room() {
   function onTabChange(newTab: number) {
     setTab([newTab, newTab - tab[0]]);
   }
-  console.log(tab);
+
   return (
     <div className="w-full h-full md:h-max">
       {/* <FilesDrop /> */}

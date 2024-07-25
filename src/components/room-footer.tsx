@@ -1,8 +1,11 @@
 import { ChangeEvent, useRef } from "react";
 
+import { useRoom } from "@/hooks/useRoom";
+
 import { Plus } from "@/assets/plus";
 
 function RoomFooter() {
+  const roomInfo = useRoom();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function onFilesSelected(event: ChangeEvent<HTMLInputElement>) {
@@ -10,9 +13,10 @@ function RoomFooter() {
   }
 
   function addNewFile() {
-    console.log(inputRef.current);
     inputRef.current?.showPicker();
   }
+
+  if (!roomInfo.isReady || !roomInfo.isReadyToComunicate) return;
 
   return (
     <footer className="bg-background-2 p-6 border-t border-border flex justify-between rounded-b-md">

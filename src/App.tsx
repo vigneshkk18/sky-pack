@@ -5,7 +5,7 @@ import Connected from "@/components/room";
 import RoomFooter from "@/components/room-footer";
 import Separator from "@/components/ui/separator";
 
-import { initRoom, useRoom } from "@/hooks/useRoom";
+import { initRoom, leaveRoom, useRoom } from "@/hooks/useRoom";
 
 import LogoNoBackground from "@/assets/logo-no-background";
 
@@ -14,6 +14,15 @@ function App() {
 
   useEffect(() => {
     initRoom();
+
+    function beforeLeave() {
+      leaveRoom();
+    }
+
+    window.addEventListener("beforeunload", beforeLeave);
+    return () => {
+      window.removeEventListener("beforeunload", beforeLeave);
+    };
   }, []);
 
   if (!roomObj.isReady) return null;
@@ -24,9 +33,9 @@ function App() {
         <LogoNoBackground className="w-11/12 max-w-52 md:mx-auto md:w-52" />
       </header>
       <Separator />
-      <main className="p-4 flex flex-col items-center gap-4 justify-center flex-grow">
-        {/* <Lobby roomId={roomObj.roomId} /> */}
-        <Connected />
+      <main className="p-4 py-6 flex flex-col items-center gap-4 justify-center flex-grow">
+        {!roomObj.isReadyToComunicate && <Lobby roomId={roomObj.roomId} />}
+        {/* <Connected /> */}
       </main>
       <RoomFooter />
     </div>
