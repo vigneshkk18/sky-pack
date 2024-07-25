@@ -18,7 +18,7 @@ export default function RoomFile({
   isInProgress = false,
 }: RoomFile) {
   return (
-    <li className="w-full h-full bg-background-2 flex items-center px-4 py-2 justify-between file border-x border-border">
+    <li className="bg-background-2 flex items-center px-4 py-2 justify-between file border-x border-border transition">
       <div className="flex gap-8">
         <div className="w-10 block">
           <FileIcon type={type} extension={extension} />

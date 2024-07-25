@@ -1,6 +1,19 @@
+import { ChangeEvent, useRef } from "react";
+
 import { Plus } from "@/assets/plus";
 
 function RoomFooter() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function onFilesSelected(event: ChangeEvent<HTMLInputElement>) {
+    console.log(event.target.files);
+  }
+
+  function addNewFile() {
+    console.log(inputRef.current);
+    inputRef.current?.showPicker();
+  }
+
   return (
     <footer className="bg-background-2 p-6 border-t border-border flex justify-between rounded-b-md">
       <div className="flex flex-col justify-stretch gap-4">
@@ -9,7 +22,16 @@ function RoomFooter() {
         </p>
         <progress value={0.6} max={1} className="w-full" />
       </div>
-      <button className="flex items-center gap-2 border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 px-4 rounded-md hover:bg-primary/90">
+      <input
+        onChange={onFilesSelected}
+        ref={inputRef}
+        type="file"
+        className="hidden"
+      />
+      <button
+        onClick={addNewFile}
+        className="flex items-center gap-2 border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 px-4 rounded-md hover:bg-primary/90"
+      >
         <Plus className="text-white" /> Add new file
       </button>
     </footer>

@@ -11,12 +11,14 @@ function CircularyProgress({ value, max }: CircularyProgress) {
   return (
     <div className="relative">
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-[1em] text-card-foreground/80">{completed}%</span>
+        <span className="text-[0.7em] text-card-foreground/80">
+          {remaining}%
+        </span>
       </div>
       <svg
-        className="w-full h-full transform -rotate-90"
-        width={75}
-        height={75}
+        className="transform -rotate-90"
+        width={50}
+        height={50}
         viewBox="0 0 100 100"
       >
         <circle
@@ -29,10 +31,10 @@ function CircularyProgress({ value, max }: CircularyProgress) {
           cy="50%"
         />
         <circle
-          className="text-primary"
+          className="text-primary transition"
           strokeWidth="5"
           strokeDasharray="188.5"
-          strokeDashoffset={remaining}
+          strokeDashoffset={(completed / 100) * 188.5}
           strokeLinecap="round"
           stroke="currentColor"
           fill="transparent"

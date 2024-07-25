@@ -12,7 +12,7 @@ function FileProgress({ type }: FileProgress) {
     return <CircularyProgress value={512} max={1024} />;
 
   return (
-    <button className="group rounded-full border border-border hover:bg-destructive p-2 text-white transition-colors">
+    <button className="group rounded-full border border-border hover:bg-destructive p-2 text-white transition-colors ease-in">
       <HourGlass
         className="text-card-foreground/80 group-hover:hidden"
         width={20}

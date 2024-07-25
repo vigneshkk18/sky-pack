@@ -23,6 +23,7 @@ function Tabs({
   onTabChange,
 }: PropsWithChildren<Tabs>) {
   const [activeElRect, setActiveElRect] = useState<DOMRect | null>(null);
+  const tabContainerRef = useRef<HTMLUListElement>(null);
   const tabRefs = useRef<Record<TabConfig["id"], HTMLLIElement | null>>({});
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function Tabs({
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const hoveredTab =
     tabRefs.current?.[hoveredIdx ?? -1]?.getBoundingClientRect();
+  const container = tabContainerRef.current?.getBoundingClientRect();
 
   const onTabChangeHandler = (id: number) => () => {
     onTabChange(id);
@@ -51,7 +53,8 @@ function Tabs({
   return (
     <ul
       onPointerLeave={onHoverOut}
-      className={`${className} flex border-b border-border w-full`}
+      ref={tabContainerRef}
+      className={`${className} flex border-b border-border w-full relative pointer-events-auto`}
     >
       {tabsConfig.map((config) => (
         <Tab
@@ -68,17 +71,23 @@ function Tabs({
           {config.label}
         </Tab>
       ))}
-      <TabHover hoveredTab={hoveredTab} />
-      <ActiveTabIndicator activeElRect={activeElRect} />
+      <TabHover hoveredTab={hoveredTab} container={container} />
+      <ActiveTabIndicator activeElRect={activeElRect} container={container} />
     </ul>
   );
 }
 
-function TabHover({ hoveredTab }: { hoveredTab: DOMRect | undefined }) {
+function TabHover({
+  hoveredTab,
+  container,
+}: {
+  hoveredTab: DOMRect | undefined;
+  container: DOMRect | undefined;
+}) {
   const rect = hoveredTab
     ? {
-        top: hoveredTab.top,
-        left: hoveredTab.left,
+        top: 0,
+        left: hoveredTab.left - (container?.left ?? 0),
         width: hoveredTab.width,
         height: hoveredTab.height,
       }
@@ -101,13 +110,15 @@ function TabHover({ hoveredTab }: { hoveredTab: DOMRect | undefined }) {
 
 function ActiveTabIndicator({
   activeElRect,
+  container,
 }: {
   activeElRect: DOMRect | null;
+  container: DOMRect | undefined;
 }) {
   const rect = activeElRect
     ? {
-        top: activeElRect.top + activeElRect.height,
-        left: activeElRect.left,
+        bottom: 0,
+        left: activeElRect.left - (container?.left ?? 0),
         width: activeElRect.width,
         height: 0,
         opacity: 0,
@@ -118,7 +129,7 @@ function ActiveTabIndicator({
     <AnimatePresence>
       {activeElRect ? (
         <motion.div
-          className="absolute top-0 left-0 bg-card-foreground/5 pointer-events-none border border-primary rounded"
+          className="bg-card-foreground/5 pointer-events-none border border-primary rounded absolute translate-y-[1px]"
           initial={{ ...rect, opacity: 0 }}
           animate={{ ...rect, opacity: 1 }}
           exit={{ ...rect, opacity: 0 }}
