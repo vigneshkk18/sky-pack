@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import ShortUniqueId from "short-unique-id";
 
+import { setupConnection } from "@/hooks/usePeerConnection";
+
 import { initSocket, socket } from "@/socket";
 
 const uid = new ShortUniqueId({ dictionary: "number", length: 6 });
@@ -35,6 +37,7 @@ export const initRoom = () => {
 export const joinRoom = (roomId: string) => {
   const { userId } = useRoom.getState();
   socket.emit("JOIN_ROOM", { roomId, userId }, ({ roomId, peers }) => {
+    setupConnection(peers);
     useRoom.setState({ roomId: roomId, peers, isReadyToComunicate: true, type: "reciever" });
   })
 }
@@ -66,7 +69,6 @@ export const removePeer = (peerId: string) => {
     const updatedPeers = new Set(state.peers);
     updatedPeers.delete(peerId);
     const peers = Array.from(updatedPeers);
-    console.log(peerId, peers);
     return { peers, isReadyToComunicate: peers.length > 0 };
   })
 }
