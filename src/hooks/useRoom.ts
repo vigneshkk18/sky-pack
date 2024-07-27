@@ -33,13 +33,19 @@ export const initRoom = () => {
   initSocket();
   const { roomId, userId } = useRoom.getState();
   socket.emit("CONNECT_ROOM", { roomId, userId });
+  socket.emit("ROOM_ACCEPTS_PEERS", { roomId, canAccept: true });
 }
 
 export const joinRoom = async (roomId: string) => {
   const { userId } = useRoom.getState();
-  const exists = await socket.emitWithAck("ROOM_EXIST", { roomId });
-  if (!exists) {
+  const roomExists = await socket.emitWithAck("ROOM_EXISTS", { roomId });
+  if (!roomExists) {
     alert("Room doesn't exist");
+    return;
+  }
+  const canJoin = await socket.emitWithAck("CAN_JOIN_ROOM", { roomId });
+  if (!canJoin) {
+    alert("There is ongoing transfer, please wait for it to get completed...");
     return;
   }
   socket.emit("JOIN_ROOM", { roomId, userId }, ({ roomId, peers }) => {

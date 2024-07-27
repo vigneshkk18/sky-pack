@@ -6,6 +6,7 @@ import { useRoom } from "@/hooks/useRoom";
 import { usePeerConnection } from "@/hooks/usePeerConnection";
 
 import { Message } from "@/types/common-channel";
+import { socket } from "@/socket";
 
 const uid = new ShortUniqueId();
 
@@ -58,7 +59,7 @@ export function resetTransfer() {
     isTransferring: false,
     total: 0,
     sentOrRecieved: 0,
-  })
+  });
 }
 
 usePeerConnection.subscribe((state) => {
@@ -89,7 +90,6 @@ usePeerConnection.subscribe((state) => {
               }
             })
 
-            const newFilesSize = data.data.reduce((total, fi) => total + fi.size, 0);
             return { files: updatedFiles, total: state.total - removedFilesSize };
           })
         }
@@ -207,6 +207,7 @@ useTransfer.subscribe((state, prev) => {
       await recur();
     } else {
       useTransfer.setState({ isTransferring: false, isInProcess: false });
+      socket.emit("ROOM_ACCEPTS_PEERS", { roomId: useRoom.getState().roomId, canAccept: true });
     }
   }
   recur();
@@ -279,7 +280,7 @@ export function downloadFile(fileId: string, name: string) {
 }
 
 export function addFilesToQueue(files: FileList) {
-  const { userId } = useRoom.getState();
+  const { userId, roomId } = useRoom.getState();
   const { files: oldFilesMetadata, total: oldTotal } = useTransfer.getState();
   const newFiles = new Array(files.length).fill(0).map((_, idx) => {
     const file = files.item(idx);
@@ -294,4 +295,5 @@ export function addFilesToQueue(files: FileList) {
 
   sendQueueInfoToPeers("FILE_QUEUE_ADDED", newFilesMetadata);
   useTransfer.setState({ files: filesMetadata, isInProcess: true, isTransferring: true, total: oldTotal + total });
+  socket.emit("ROOM_ACCEPTS_PEERS", { roomId, canAccept: false });
 }
