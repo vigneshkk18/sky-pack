@@ -1,5 +1,4 @@
-import { FileObject } from "@/hooks/useTransfer";
-
+import { FileObject } from "@/types/transfer";
 
 export type Message = {
   type: "FILE_QUEUE_ADDED",

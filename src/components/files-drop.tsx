@@ -1,5 +1,5 @@
 import { FileDrop } from "react-file-drop";
-import { DragEvent, useState } from "react";
+import { useState } from "react";
 
 import { show } from "@/hooks/useToast";
 import { useTransfer } from "@/hooks/useTransfer";
@@ -20,7 +20,7 @@ function FilesDrop() {
     setIsDragging(false);
   }
 
-  function onDrop(files: FileList | null, event: DragEvent<HTMLDivElement>) {
+  function onDrop(files: FileList | null) {
     setIsDragging(false);
     if (isRecieving) {
       show({
