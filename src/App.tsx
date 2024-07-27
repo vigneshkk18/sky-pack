@@ -6,7 +6,9 @@ import FilesDrop from "@/components/files-drop";
 import RoomFooter from "@/components/room-footer";
 import Separator from "@/components/ui/separator";
 
-import { initRoom, leaveRoom, useRoom } from "@/hooks/useRoom";
+import { initRoom, useRoom } from "@/hooks/useRoom";
+
+import { leaveRoom } from "@/utils/room";
 
 import { Logout } from "@/assets/logout";
 import LogoNoBackground from "@/assets/logo-no-background";

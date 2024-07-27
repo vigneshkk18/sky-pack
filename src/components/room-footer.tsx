@@ -1,13 +1,12 @@
 import { ChangeEvent, useRef } from "react";
 
 import { useRoom } from "@/hooks/useRoom";
-import { addFilesToQueue, useTransfer } from "@/hooks/useTransfer";
+import { useTransfer } from "@/hooks/useTransfer";
+
+import { byteToMB } from "@/utils/common";
+import { addFilesToQueue } from "@/utils/file-queue";
 
 import { Plus } from "@/assets/plus";
-
-function byteToMB(byte: number) {
-  return (byte * 0.000001).toFixed(2);
-}
 
 function RoomFooter() {
   const roomInfo = useRoom();

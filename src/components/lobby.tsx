@@ -1,7 +1,7 @@
 import { QRCode } from "antd";
 import { FormEvent, useState } from "react";
 
-import { joinRoom } from "@/hooks/useRoom";
+import { joinRoom } from "@/utils/room";
 
 import { Clipboard } from "@/assets/clipboard";
 import { ClipboardCopied } from "@/assets/clipboard-copied";

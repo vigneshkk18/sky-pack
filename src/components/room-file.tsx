@@ -1,11 +1,9 @@
 import { FileIcon, IconType } from "react-file-icon";
 
-import {
-  removeFileFromQueue,
-  downloadFile as downloadFileFromCache,
-} from "@/hooks/useTransfer";
-
 import FileProgress from "@/components/file-progress";
+
+import { downloadFileFromCache } from "@/utils/common";
+import { removeFileFromQueue } from "@/utils/file-queue";
 
 interface RoomFile {
   id: string;

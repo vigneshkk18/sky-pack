@@ -1,7 +1,9 @@
 import { FileDrop } from "react-file-drop";
 import { DragEvent, useState } from "react";
 
-import { addFilesToQueue, useTransfer } from "@/hooks/useTransfer";
+import { useTransfer } from "@/hooks/useTransfer";
+
+import { addFilesToQueue } from "@/utils/file-queue";
 
 function FilesDrop() {
   const [isDragging, setIsDragging] = useState(false);
