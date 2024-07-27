@@ -9,6 +9,7 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
+  ROOM_EXIST: (_: { roomId: string }, cb: (exists: boolean) => void) => void;
   CONNECT_ROOM: (_: { roomId: string, userId: string }) => void;
   JOIN_ROOM: (_: { roomId: string, userId: string }, cb: (_: { roomId: string, userId: string, peers: string[] }) => void) => void;
   LEAVE_ROOM: (_: { roomId: string, userId: string }) => void;

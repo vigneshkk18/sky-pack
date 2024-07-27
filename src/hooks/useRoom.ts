@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import ShortUniqueId from "short-unique-id";
 
-import { setupConnection } from "@/hooks/usePeerConnection";
+import { resetTransfer } from "@/hooks/useTransfer";
+import { destroyConnections, setupConnection } from "@/hooks/usePeerConnection";
 
 import { initSocket, socket } from "@/socket";
 
@@ -34,8 +35,13 @@ export const initRoom = () => {
   socket.emit("CONNECT_ROOM", { roomId, userId });
 }
 
-export const joinRoom = (roomId: string) => {
+export const joinRoom = async (roomId: string) => {
   const { userId } = useRoom.getState();
+  const exists = await socket.emitWithAck("ROOM_EXIST", { roomId });
+  if (!exists) {
+    alert("Room doesn't exist");
+    return;
+  }
   socket.emit("JOIN_ROOM", { roomId, userId }, ({ roomId, peers }) => {
     setupConnection(peers);
     useRoom.setState({ roomId: roomId, peers, isReadyToComunicate: true, type: "reciever" });
@@ -44,11 +50,10 @@ export const joinRoom = (roomId: string) => {
 
 export const leaveRoom = () => {
   const { roomId, userId, type } = useRoom.getState();
+  onRoomClosed();
+  destroyConnections();
+  resetTransfer();
   socket.emit(type === "reciever" ? "LEAVE_ROOM" : "DISCONNECT_ROOM", { roomId, userId });
-  if (type === "sender") {
-    const newRoomId = createRoom();
-    socket.emit("CONNECT_ROOM", { roomId: newRoomId, userId });
-  }
 }
 
 export const createRoom = () => {

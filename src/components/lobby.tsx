@@ -11,6 +11,7 @@ interface Lobby {
 }
 
 function Lobby({ roomId }: Lobby) {
+  const [isJoining, setIsJoining] = useState(false);
   const [roomIdToJoin, setRoomIdToJoin] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
@@ -22,9 +23,11 @@ function Lobby({ roomId }: Lobby) {
     }, 3000);
   }
 
-  function onJoinRoom(e: FormEvent<HTMLFormElement>) {
+  async function onJoinRoom(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    joinRoom(roomIdToJoin);
+    setIsJoining(true);
+    await joinRoom(roomIdToJoin);
+    setIsJoining(false);
   }
 
   return (
@@ -44,11 +47,12 @@ function Lobby({ roomId }: Lobby) {
           type="text"
           placeholder="Enter RoomID"
           value={roomIdToJoin}
+          disabled={isJoining}
           onChange={(e) => setRoomIdToJoin(e.target.value)}
           className="outline-0 p-2 pl-4 bg-background-2 border border-border rounded-s-md flex-grow md:w-48 touch-none"
         />
         <button
-          disabled={!roomIdToJoin.trim()}
+          disabled={!roomIdToJoin.trim() || isJoining}
           type="submit"
           className="w-max border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 rounded-e-md hover:bg-primary/90"
         >

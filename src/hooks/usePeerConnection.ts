@@ -50,6 +50,16 @@ export async function setupConnection(peerIds: string[]) {
   usePeerConnection.setState({ connections });
 }
 
+export function destroyConnections() {
+  const { connections, dataChannels } = usePeerConnection.getState();
+
+  dataChannels.common.forEach(dc => dc.close());
+  dataChannels.files.forEach(dc => dc.close());
+  connections.forEach(c => c.close());
+
+  usePeerConnection.setState({ connections: new Map(), dataChannels: { common: new Map(), files: new Map() } })
+}
+
 socket.on("PEER_JOINED", async (peerId) => {
   const { roomId, userId } = useRoom.getState();
   const { connections, dataChannels } = usePeerConnection.getState();

@@ -51,6 +51,16 @@ export const useTransfer = create<UseTransferHook>(() => ({
   sentOrRecieved: 0,
 }));
 
+export function resetTransfer() {
+  useTransfer.setState({
+    files: [],
+    isInProcess: false,
+    isTransferring: false,
+    total: 0,
+    sentOrRecieved: 0,
+  })
+}
+
 usePeerConnection.subscribe((state) => {
   const common = state.dataChannels.common;
   if (common.size) {
