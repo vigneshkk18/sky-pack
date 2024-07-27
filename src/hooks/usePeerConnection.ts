@@ -60,6 +60,8 @@ socket.on("PEER_JOINED", async (peerId) => {
   connection.id = peerId;
   const commonDataChannel = connection.createDataChannel('COMMON');
   const filesChannel = connection.createDataChannel('FILES');
+  filesChannel.binaryType = "arraybuffer";
+  filesChannel.bufferedAmountLowThreshold = 0;
 
   connection.onicecandidate = (ev) => {
     if (ev.candidate) {

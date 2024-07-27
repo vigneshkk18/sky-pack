@@ -35,7 +35,7 @@ function App() {
       <Separator />
       <main className="p-4 py-6 flex flex-col items-center gap-4 justify-center flex-grow">
         {!roomObj.isReadyToComunicate && <Lobby roomId={roomObj.roomId} />}
-        {/* <Connected /> */}
+        {roomObj.isReadyToComunicate && <Connected />}
       </main>
       <RoomFooter />
     </div>

@@ -1,8 +1,10 @@
-import { useState } from "react";
-import ShortUniqueId from "short-unique-id";
+import { useMemo, useState } from "react";
 
-import Tabs, { TabConfig } from "@/components/ui/tabs";
+import { useRoom } from "@/hooks/useRoom";
+import { useTransfer } from "@/hooks/useTransfer";
+
 import RoomFiles from "@/components/room-files";
+import Tabs, { TabConfig } from "@/components/ui/tabs";
 
 const tabsConfig: TabConfig[] = [
   { id: 0, label: "All Files" },
@@ -11,26 +13,34 @@ const tabsConfig: TabConfig[] = [
   { id: 3, label: "Completed" },
 ];
 
-const defaultFiles = [
-  new ShortUniqueId().rnd(),
-  new ShortUniqueId().rnd(),
-  new ShortUniqueId().rnd(),
-  new ShortUniqueId().rnd(),
-];
-
 function Room() {
-  const [tab, setTab] = useState<[number, number]>([0, 0]);
-  const [files, setFiles] = useState<string[]>(defaultFiles);
+  const [tab, setTab] = useState<number>(0);
+  const { userId } = useRoom();
+  const { files } = useTransfer();
+
+  const filteredFiles = useMemo(() => {
+    if (tab === 0) return files;
+    if (tab === 1) {
+      return files.filter((file) => file.from === userId);
+    }
+    if (tab === 2) {
+      return files.filter((file) => file.from !== userId);
+    }
+    if (tab === 3) {
+      return files.filter((file) => file.sentOrRecieved >= file.size);
+    }
+    return [];
+  }, [tab, files, userId]);
 
   function onTabChange(newTab: number) {
-    setTab([newTab, newTab - tab[0]]);
+    setTab(newTab);
   }
 
   return (
     <div className="w-full h-full md:h-max">
       {/* <FilesDrop /> */}
-      <Tabs tab={tab[0]} onTabChange={onTabChange} tabsConfig={tabsConfig} />
-      <RoomFiles files={files} />
+      <Tabs tab={tab} onTabChange={onTabChange} tabsConfig={tabsConfig} />
+      <RoomFiles files={filteredFiles} />
     </div>
   );
 }

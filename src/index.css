@@ -49,6 +49,14 @@
     @apply border-b border-b-border rounded-b;
   }
 
+  button:disabled {
+    @apply bg-card-foreground/20 text-card-foreground/70 hover:bg-card-foreground/20 hover:text-card-foreground/70;
+  }
+
+  button:disabled svg {
+    @apply text-card-foreground/70;
+  }
+
   @screen md {
 
     .file:nth-of-type(1),

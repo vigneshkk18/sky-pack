@@ -50,7 +50,7 @@ function Lobby({ roomId }: Lobby) {
         <button
           disabled={!roomIdToJoin.trim()}
           type="submit"
-          className="w-max border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 rounded-e-md hover:bg-primary/90 disabled:bg-card-foreground/20 disabled:text-card-foreground/70"
+          className="w-max border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 rounded-e-md hover:bg-primary/90"
         >
           Join Room
         </button>
