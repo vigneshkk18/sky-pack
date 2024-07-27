@@ -27,7 +27,7 @@ function RoomFooter() {
   if (!roomInfo.isReady || !roomInfo.isReadyToComunicate) return;
 
   return (
-    <footer className="bg-background-2 p-6 border-t border-border flex justify-between rounded-b-md">
+    <footer className="bg-background-2 p-4 md:p-6 border-t border-border flex justify-between rounded-b-md">
       <div className="flex flex-col justify-stretch gap-4">
         <p className="font-bold">
           {byteToMB(sentOrRecieved)} MB / {byteToMB(total)} MB{" "}
@@ -44,9 +44,10 @@ function RoomFooter() {
       <button
         onClick={addNewFile}
         disabled={isInProcess && !isTransferring}
-        className="flex items-center gap-2 border-none outline-0 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 px-4 rounded-md hover:bg-primary/90"
+        className="flex items-center md:gap-2 h-max border-none outline-0 shadow-md shadow-primary/50 focus-visible:ring-offset-1 focus-visible:ring-2 focus-visible:ring-primary/80 bg-primary text-primary-foreground p-2 md:px-4 rounded-full md:rounded-md hover:bg-primary/90"
       >
-        <Plus className="text-white" /> Add new file
+        <Plus className="text-white" />
+        <span className="hidden md:block"> Add new file</span>
       </button>
     </footer>
   );

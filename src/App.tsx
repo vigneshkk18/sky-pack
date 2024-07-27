@@ -28,7 +28,7 @@ function App() {
   if (!roomObj.isReady) return null;
 
   return (
-    <div className="bg-card text-card-foreground md:shadow-2xl w-full md:max-w-screen-md h-full md:h-auto md:rounded flex flex-col">
+    <div className="bg-card text-card-foreground md:shadow-2xl w-full max-w-[100vw] md:max-w-screen-md h-full md:h-auto md:rounded flex flex-col">
       <header className="p-4 py-6">
         <LogoNoBackground className="w-11/12 max-w-52 md:mx-auto md:w-52" />
       </header>

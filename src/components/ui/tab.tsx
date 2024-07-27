@@ -27,12 +27,12 @@ export const Tab = forwardRef(
       : "text-card-foreground/80";
     return (
       <li
-        className={`${className} flex-grow text-center cursor-pointer`}
+        className={`${className} flex-grow text-center cursor-pointer px-4`}
         ref={ref}
         {...props}
       >
         <button
-          className={`w-full h-full py-2 outline-none ${color}`}
+          className={`w-max h-full py-2 outline-none ${color}`}
           onClick={() => onTabChange(tab)}
         >
           {children}
