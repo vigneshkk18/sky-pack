@@ -31,8 +31,8 @@ function App() {
 
   return (
     <div className="bg-card text-card-foreground md:shadow-2xl w-full md:max-w-screen-md h-full max-h-screen md:max-h-[700px] md:rounded app-layout">
-      <header className="p-4 py-6">
-        <LogoNoBackground className="w-11/12 max-w-52 md:mx-auto md:w-52" />
+      <header className="p-4 md:py-6">
+        <LogoNoBackground className="w-11/12 max-w-40 md:mx-auto md:w-52" />
       </header>
       <Separator />
       <main className="p-4 py-6 flex flex-col items-center gap-4 justify-center overflow-auto relative">

@@ -25,20 +25,49 @@ function Tabs({
   tabsConfig,
   onTabChange,
 }: PropsWithChildren<Tabs>) {
-  const [activeElRect, setActiveElRect] = useState<DOMRect | null>(null);
+  const [activeElRect, setActiveElRect] = useState<{
+    id: number;
+    rect: DOMRect | null;
+  }>({ id: 0, rect: null });
+  const [hoverElRect, setHoverElRect] = useState<{
+    id: number;
+    rect: DOMRect | null;
+  }>({ id: 0, rect: null });
   const tabContainerRef = useRef<HTMLUListElement>(null);
   const tabRefs = useRef<Record<TabConfig["id"], HTMLLIElement | null>>({});
 
   useEffect(() => {
+    function onResize() {
+      setActiveElRect((prev) => {
+        if (!prev.rect) return prev;
+        return {
+          ...prev,
+          rect: tabRefs.current[prev.id]?.getBoundingClientRect() ?? null,
+        };
+      });
+
+      setHoverElRect((prev) => {
+        if (!prev.rect) return prev;
+        return {
+          ...prev,
+          rect: tabRefs.current[prev.id]?.getBoundingClientRect() ?? null,
+        };
+      });
+    }
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  useEffect(() => {
     const rect = tabRefs.current?.[tab]?.getBoundingClientRect();
     if (rect) {
-      setActiveElRect(rect);
+      setActiveElRect({ id: tab, rect: rect });
     }
   }, [tab]);
 
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const hoveredTab =
-    tabRefs.current?.[hoveredIdx ?? -1]?.getBoundingClientRect();
   const container = tabContainerRef.current?.getBoundingClientRect();
 
   const onTabChangeHandler = (id: number) => () => {
@@ -46,11 +75,12 @@ function Tabs({
   };
 
   function onHoverOut() {
-    setHoveredIdx(null);
+    setHoverElRect({ id: 0, rect: null });
   }
 
   const onHover = (id: number) => () => {
-    setHoveredIdx(id);
+    const hoverElRect = tabRefs.current?.[id ?? -1]?.getBoundingClientRect();
+    setHoverElRect({ id, rect: hoverElRect ?? null });
   };
 
   const scrollTabsContainer = (dir: "left" | "right") => () => {
@@ -90,8 +120,11 @@ function Tabs({
             {config.label}
           </Tab>
         ))}
-        <TabHover hoveredTab={hoveredTab} container={container} />
-        <ActiveTabIndicator activeElRect={activeElRect} container={container} />
+        <TabHover hoveredTab={hoverElRect.rect} container={container} />
+        <ActiveTabIndicator
+          activeElRect={activeElRect.rect}
+          container={container}
+        />
       </ul>
       <button
         onClick={scrollTabsContainer("right")}
@@ -107,7 +140,7 @@ function TabHover({
   hoveredTab,
   container,
 }: {
-  hoveredTab: DOMRect | undefined;
+  hoveredTab: DOMRect | null;
   container: DOMRect | undefined;
 }) {
   const rect = hoveredTab
