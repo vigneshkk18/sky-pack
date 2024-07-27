@@ -32,7 +32,7 @@ function App() {
   if (!roomObj.isReady) return null;
 
   return (
-    <div className="bg-card text-card-foreground md:shadow-2xl w-full md:max-w-screen-md h-full max-h-screen md:max-h-[700px] md:rounded app-layout">
+    <div className="bg-card text-card-foreground md:shadow-2xl w-full md:max-w-screen-md h-full max-h-dvh md:max-h-[700px] md:rounded app-layout">
       <Toaster />
       <Header />
       <Separator />
