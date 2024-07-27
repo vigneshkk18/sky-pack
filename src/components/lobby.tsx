@@ -5,6 +5,7 @@ import { joinRoom } from "@/utils/room";
 
 import { Clipboard } from "@/assets/clipboard";
 import { ClipboardCopied } from "@/assets/clipboard-copied";
+import { show } from "@/hooks/useToast";
 
 interface Lobby {
   roomId: string;
@@ -18,6 +19,7 @@ function Lobby({ roomId }: Lobby) {
   function copyRoomId() {
     navigator.clipboard.writeText(roomId);
     setIsCopied(true);
+    show({ text: "Copied to clipboard", variant: "success", duration: 3000 });
     setTimeout(() => {
       setIsCopied(false);
     }, 3000);

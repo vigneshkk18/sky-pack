@@ -1,6 +1,6 @@
 import RoomFile from "@/components/room-file";
 
-import { FileObject } from "@/hooks/useTransfer";
+import { FileObject } from "@/types/transfer";
 
 interface RoomFiles {
   files: FileObject[];

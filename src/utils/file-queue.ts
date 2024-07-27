@@ -1,5 +1,6 @@
 import ShortUniqueId from "short-unique-id";
 
+import { show } from "@/hooks/useToast";
 import { useRoom } from "@/hooks/useRoom";
 import { usePeerConnection } from "@/hooks/usePeerConnection";
 import { updateFileProgress, useTransfer } from "@/hooks/useTransfer";
@@ -35,6 +36,7 @@ export function addFilesToQueue(files: FileList) {
   const total = newFiles.reduce((total, file) => total + file.size, 0);
 
   sendQueueInfoToPeers("FILE_QUEUE_ADDED", newFilesMetadata);
+  show({ text: `${newFiles.length} new files added to queue`, duration: 3000, variant: "success" })
   useTransfer.setState({ files: filesMetadata, isInProcess: true, isTransferring: true, total: oldTotal + total });
   socket.emit("ROOM_ACCEPTS_PEERS", { roomId, canAccept: false });
 }
@@ -63,6 +65,7 @@ export function removeFileFromQueue(id: string) {
     });
     if (removedFile) {
       sendQueueInfoToPeers("FILE_QUEUE_REMOVED", [removedFile]);
+      show({ text: `File removed from queue`, duration: 3000, variant: "destructive" })
       useTransfer.setState({ files: updatedFiles, total: total - removedFile.size });
     }
     return true;
@@ -81,6 +84,7 @@ function onFileAddedToQueue(data: Message) {
   useTransfer.setState((state) => {
     const files = [...state.files, ...data.data];
     const newFilesSize = data.data.reduce((total, fi) => total + fi.size, 0);
+    show({ text: `${data.data.length} new files added to queue`, duration: 3000, variant: "success" })
     return { files, total: state.total + newFilesSize };
   })
 }
@@ -99,6 +103,7 @@ function onFileRemovedFromQueue(data: Message) {
       }
     })
 
+    show({ text: `File removed from queue`, duration: 3000, variant: "destructive" })
     return { files: updatedFiles, total: state.total - removedFilesSize };
   })
 }

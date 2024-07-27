@@ -1,5 +1,6 @@
 import { socket } from "@/socket";
 
+import { show } from "@/hooks/useToast";
 import { useRoom } from "@/hooks/useRoom";
 import { usePeerConnection } from "@/hooks/usePeerConnection";
 
@@ -58,6 +59,7 @@ export const onHostLeft: ServerToClientEvents['HOST_LEFT'] = async () => {
 
   connections.forEach(connection => connection.close())
 
+  show({ text: "Host left the room", duration: 3000, variant: "destructive" });
   usePeerConnection.setState({ connections: new Map(), dataChannels: { common: new Map(), files: new Map() } });
 }
 
@@ -75,6 +77,7 @@ export const onPeerJoined: ServerToClientEvents['PEER_JOINED'] = async (peerId) 
   updatedCommonChannels.set(peerId, common);
   updatedConnections.set(peerId, connection);
 
+  show({ text: "New user joined", duration: 3000, variant: "info" });
   usePeerConnection.setState({ connections: updatedConnections, dataChannels: { common: updatedCommonChannels, files: updatedFilesChannels } });
 }
 
@@ -92,6 +95,7 @@ export const onPeerLeft: ServerToClientEvents['PEER_LEFT'] = async (peerId) => {
   updatedCommonChannels.delete(peerId);
   updatedFilesChannels.delete(peerId);
 
+  show({ text: "User left", duration: 3000, variant: "info" });
   usePeerConnection.setState({ connections: updatedConnections, dataChannels: { common: updatedCommonChannels, files: updatedFilesChannels } });
 }
 

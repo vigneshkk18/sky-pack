@@ -2,8 +2,8 @@ import { FileIcon, IconType } from "react-file-icon";
 
 import FileProgress from "@/components/file-progress";
 
-import { downloadFileFromCache } from "@/utils/common";
 import { removeFileFromQueue } from "@/utils/file-queue";
+import { byteToMB, downloadFileFromCache } from "@/utils/common";
 
 interface RoomFile {
   id: string;
@@ -13,10 +13,6 @@ interface RoomFile {
   type: IconType;
   extension: string;
   isInProgress?: boolean;
-}
-
-function byteToMB(byte: number) {
-  return (byte * 0.000001).toFixed(2);
 }
 
 export default function RoomFile({

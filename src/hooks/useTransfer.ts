@@ -8,6 +8,7 @@ import { socket } from "@/socket";
 import { processQueue, queue } from "@/utils/file-queue";
 
 import { UseTransferHook } from "@/types/transfer";
+import { show } from "./useToast";
 
 export const useTransfer = create<UseTransferHook>(() => ({
   files: [],
@@ -50,5 +51,6 @@ useTransfer.subscribe((state, prev) => {
       socket.emit("ROOM_ACCEPTS_PEERS", { roomId: useRoom.getState().roomId, canAccept: true });
     }
   }
+  show({ text: "Started transfer", duration: 3000, variant: "info" });
   recur();
 });

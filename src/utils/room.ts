@@ -1,23 +1,28 @@
-import ShortUniqueId from "short-unique-id";
-
 import { resetTransfer } from "@/hooks/useTransfer";
 import { onRoomClosed, useRoom } from "@/hooks/useRoom";
 import { destroyConnections, setupConnection } from "@/hooks/usePeerConnection";
 
 import { socket } from "@/socket";
-
-const uid = new ShortUniqueId({ dictionary: "number", length: 6 });
+import { show } from "@/hooks/useToast";
 
 export const joinRoom = async (roomId: string) => {
   const { userId } = useRoom.getState();
   const roomExists = await socket.emitWithAck("ROOM_EXISTS", { roomId });
   if (!roomExists) {
-    alert("Room doesn't exist");
+    show({
+      text: "Room doesn't exist",
+      duration: 3000,
+      variant: "destructive",
+    })
     return;
   }
   const canJoin = await socket.emitWithAck("CAN_JOIN_ROOM", { roomId });
   if (!canJoin) {
-    alert("There is ongoing transfer, please wait for it to get completed...");
+    show({
+      text: "There is ongoing transfer, please wait for it to get completed...",
+      duration: 3000,
+      variant: "destructive",
+    })
     return;
   }
   socket.emit("JOIN_ROOM", { roomId, userId }, ({ roomId, peers }) => {

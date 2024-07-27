@@ -1,6 +1,7 @@
 import { FileDrop } from "react-file-drop";
 import { DragEvent, useState } from "react";
 
+import { show } from "@/hooks/useToast";
 import { useTransfer } from "@/hooks/useTransfer";
 
 import { addFilesToQueue } from "@/utils/file-queue";
@@ -20,10 +21,13 @@ function FilesDrop() {
   }
 
   function onDrop(files: FileList | null, event: DragEvent<HTMLDivElement>) {
-    console.log(isRecieving);
     setIsDragging(false);
     if (isRecieving) {
-      // TODO: show message
+      show({
+        text: "Please wait for the ongoing transfer to complete before sending new files...",
+        duration: 3000,
+        variant: "destructive",
+      });
       return;
     }
     if (files) {
