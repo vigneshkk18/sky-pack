@@ -9,7 +9,7 @@ interface RoomFiles {
 export default function RoomFiles({ files }: RoomFiles) {
   if (!files.length) {
     return (
-      <div className="flex flex-col w-full mt-6 justify-center items-center gap-2">
+      <div className="flex flex-col w-full mt-6 justify-center items-center gap-2 justify-self-center h-full">
         <img
           width={250}
           height={300}
@@ -25,7 +25,7 @@ export default function RoomFiles({ files }: RoomFiles) {
   }
 
   return (
-    <ul className="mt-6 mb-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-[1px]">
+    <ul className="mt-6 mb-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-[1px] h-[calc(100%-73px)] no-scrollbar overflow-scroll">
       {files.map((file) => (
         <RoomFile
           key={file.id}

@@ -37,8 +37,7 @@ function Room() {
   }
 
   return (
-    <div className="w-full h-full md:h-max">
-      {/* <FilesDrop /> */}
+    <div className="w-full h-full flex flex-col">
       <Tabs tab={tab} onTabChange={onTabChange} tabsConfig={tabsConfig} />
       <RoomFiles files={filteredFiles} />
     </div>

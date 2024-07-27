@@ -27,7 +27,7 @@ function RoomFooter() {
   if (!roomInfo.isReady || !roomInfo.isReadyToComunicate) return;
 
   return (
-    <footer className="bg-background-2 p-4 md:p-6 border-t border-border flex justify-between rounded-b-md">
+    <footer className="bg-background-2 p-4 md:p-6 border-t border-border flex justify-between items-center rounded-b-md">
       <div className="flex flex-col justify-stretch gap-4">
         <p className="font-bold">
           {byteToMB(sentOrRecieved)} MB / {byteToMB(total)} MB{" "}
@@ -39,6 +39,7 @@ function RoomFooter() {
         onChange={onFilesSelected}
         ref={inputRef}
         type="file"
+        multiple
         className="hidden"
       />
       <button

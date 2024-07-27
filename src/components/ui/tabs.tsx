@@ -90,7 +90,7 @@ function Tabs({
             {config.label}
           </Tab>
         ))}
-        {/* <TabHover hoveredTab={hoveredTab} container={container} /> */}
+        <TabHover hoveredTab={hoveredTab} container={container} />
         <ActiveTabIndicator activeElRect={activeElRect} container={container} />
       </ul>
       <button

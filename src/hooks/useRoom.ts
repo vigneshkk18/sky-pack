@@ -76,6 +76,7 @@ export const removePeer = (peerId: string) => {
 export const onRoomClosed = () => {
   const roomId = uid.rnd();
   useRoom.setState({ roomId, isReadyToComunicate: false, peers: [], type: "sender" });
+  caches.delete('sky-pack-files');
   const { userId } = useRoom.getState();
   socket.emit("CONNECT_ROOM", { roomId, userId });
 }

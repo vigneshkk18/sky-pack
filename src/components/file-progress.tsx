@@ -24,13 +24,13 @@ function FileProgress({
     return (
       <button onClick={downloadFile} className="group rounded-full p-2">
         <CheckCircle
-          className="group-hover:hidden"
+          className="hidden md:block md:group-hover:hidden"
           width={24}
           height={24}
           fill="#22c55e"
         />
         <Download
-          className="hidden group-hover:block"
+          className="block md:hidden md:group-hover:block"
           width={24}
           height={24}
           color="#8789fe"
@@ -45,15 +45,15 @@ function FileProgress({
   return (
     <button
       onClick={removeFileFromQueue}
-      className="group rounded-full border border-border hover:bg-destructive p-2 text-white transition-colors ease-in"
+      className="group rounded-full border border-border bg-destructive md:bg-inherit md:hover:bg-destructive p-2 transition-colors ease-in"
     >
       <HourGlass
-        className="text-card-foreground/80 group-hover:hidden"
+        className="text-card-foreground/80 hidden md:block md:group-hover:hidden"
         width={20}
         height={20}
       />
       <Cancel
-        className="hidden text-destructive-foreground group-hover:block"
+        className="text-destructive-foreground block md:hidden md:group-hover:block"
         width={20}
         height={20}
       />

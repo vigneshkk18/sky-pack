@@ -80,4 +80,15 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .app-layout {
+    display: grid;
+    grid-template-areas: "header"
+      "separator"
+      "content"
+      "footer";
+
+    grid-template-rows: min-content 1px auto min-content;
+    width: 100vw;
+  }
 }
