@@ -34,16 +34,6 @@
     npm run dev
     ```
 
-### Usage
+### Demo
 
-**Mobile Screenshot**
-
-<img src="/demos/sky-pack-mobile.png" width="200" height="300"/>
-
-**Desktop Screenshot**
-
-<img src="/demos/sky-pack-mobile.png" width="400" height="300"/>
-
-**Demo**
-
-<video src="/demos/skypack-demo.mp4" width="400" height="300"></video>
+https://github.com/user-attachments/assets/038c910a-97b8-4eb5-a12a-b7493e79d0f7
