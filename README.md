@@ -38,12 +38,12 @@
 
 **Mobile Screenshot**
 
-![SkyPack Mobile](/demos/sky-pack-mobile.png?raw=true)
+<img src="/demos/sky-pack-mobile.png" width="200" height="300"/>
 
 **Desktop Screenshot**
 
-![SkyPack Desktop](/demos/sky-pack-desktop.png)
+<img src="/demos/sky-pack-mobile.png" width="400" height="300"/>
 
 **Demo**
 
-[![SkyPack Demo](/demos/skypack-demo.mp4)](/demos/skypack-demo.mp4)
+<video src="/demos/skypack-demo.mp4" width="400" height="300"></video>
