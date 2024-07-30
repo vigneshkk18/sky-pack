@@ -18,7 +18,7 @@
 1. Clone the Signaling Server repository and follow the instructions to setup the signaling server:
 
     ```bash
-    git clone [webrtc-signaling-server](https://github.com/vigneshkk18/webrtc-signaling-server.git)
+    git clone https://github.com/vigneshkk18/webrtc-signaling-server.git
     ```
 2. Add the signaling server url as env variable
 
@@ -34,6 +34,16 @@
     npm run dev
     ```
 
-### Usage:
-// Add Screenshots
+### Usage
 
+**Mobile Screenshot**
+
+![SkyPack Mobile](/demos/sky-pack-mobile.png?raw=true)
+
+**Desktop Screenshot**
+
+![SkyPack Desktop](/demos/sky-pack-desktop.png)
+
+**Demo**
+
+[![SkyPack Demo](/demos/skypack-demo.mp4)](/demos/skypack-demo.mp4)
