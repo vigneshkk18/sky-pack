@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+# SkyPack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SkyPack** is a decentralized file-sharing platform that enables real-time file transfer between multiple devices. By creating virtual rooms, users can securely share files directly without relying on cloud storage or intermediaries. Leveraging WebRTC technology, SkyPack offers a fast, efficient, and private file sharing experience.
 
-Currently, two official plugins are available:
+### Tech Stack
+* Frontend Framework: React
+* Styling: Tailwind CSS
+* Peer-to-Peer Connection: WebRTC API
+* Signaling Server: Websocket (Node.js)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Project Goals
+* Decentralized file sharing
+* Real-time file transfer across multiple devices
+* Secure file sharing without relying on cloud storage or third parties
 
-## Expanding the ESLint configuration
+### Installation
+**Prerequisites:**
+1. Clone the Signaling Server repository and follow the instructions to setup the signaling server:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+    ```bash
+    git clone [webrtc-signaling-server](https://github.com/vigneshkk18/webrtc-signaling-server.git)
+    ```
+2. Add the signaling server url as env variable
 
-- Configure the top-level `parserOptions` property like this:
+    ```.env
+    VITE_SOCKET_URL = "[YOU_URL]/many-to-many"
+    ```
+3. Install dependencies
+    ```bash
+    npm install
+    ```
+4. Start the server:
+    ```bash
+    npm run dev
+    ```
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Usage:
+// Add Screenshots
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
